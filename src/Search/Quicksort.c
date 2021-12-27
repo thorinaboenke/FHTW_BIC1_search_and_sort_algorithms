@@ -4,7 +4,7 @@
 // dividing array into two partitions
 int partition(float arr[], int low, int high){
   // last Element becomes pivot
-  int pivot = arr[high];
+  float pivot = arr[high];
   // i is temporary pivot index
   int i = (low - 1);
 
