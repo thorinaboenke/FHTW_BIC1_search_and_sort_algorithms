@@ -2,7 +2,7 @@
 Implementation and comparison of different search and sort algorithms
 
 ## compile 
-gcc -Wall Main.c Sort.c Helper.c -o sorts
+gcc -Wall Main.c Sort.c Helper.c -Iinclude -o sorts
 
 ## run
 ./sorts
