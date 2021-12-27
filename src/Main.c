@@ -22,8 +22,11 @@ char mer[] = "Mergesort";
 char qui[] = "Quicksort";
 
 int main(){
-  // outputSorts();
-  // comparePerformance();
+  printf("1.1 Implement sort algorithms\n");
+  outputSorts();
+  printf("1.2 Compare performance of sort algorithms on same data (arrays of different sizes)\n");
+  comparePerformance();
+  printf("1.3 Statistics for bubblesort performed 20 times on the same array of 2000 random numbers.\n");
   averageTime();
   return 0;
 }
@@ -139,7 +142,7 @@ void outputPerformance(char name[], float* array_of_inputs[], int sizes[], int l
 }
 
 // for sort function that take array, start index and end index as parameter
-void outputPerformance2(char name[], float* array_of_inputs[], int sizes[], int length,  int (*sort_function)(float[], int, int)){
+void outputPerformance2(char name[], float* array_of_inputs[], int sizes[], int length, int (*sort_function)(float[], int, int)){
   clock_t start_t, end_t, total_t;
   printf("----------%s------------\n", name);
   printf("elements\tduration\n" );
@@ -183,7 +186,7 @@ void averageTime(){
   free(input);
   free(copy_of_input);
 
-  printf("Bubblesort performed 20 times on the same array of 2000 random numbers.\n");
+  printf("\n");
   printf("Minimun runtime; %.0f\n", min );
   printf("Maximum runtime; %.0f\n", max );
   printf("Average runtime; %.0f\n", avg);
