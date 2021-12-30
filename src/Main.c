@@ -34,7 +34,6 @@ int main(){
 int outputSorts(){
   int sizes[3]= {8,16,64};
   int length = sizeof(sizes)/sizeof(sizes[0]);
-
   outputSort(bub, sizes, length, bubbleSort);
   outputSort(ins, sizes, length, insertionSort);
   outputSort2(mer, sizes, length, mergeSort);
@@ -64,7 +63,7 @@ void outputSort2(char name[], int sizes[], int length,  int (*sort_function)(flo
     printf("Array with %d elements\n", sizes[i] );
     float * arr = initializeArray(sizes[i]);
     printArray(arr, sizes[i]);
-    quickSort(arr, 0, (sizes[i]-1));
+    sort_function(arr, 0, (sizes[i]-1));
     printArray(arr, sizes[i]);
     checkAscending(arr, sizes[i]);
     printf(" \n");
@@ -73,7 +72,7 @@ void outputSort2(char name[], int sizes[], int length,  int (*sort_function)(flo
 }
 
 int comparePerformance(){
-  int sizes[7]= {8,32,128, 512, 2048, 8192, 32768};
+  int sizes[] = {8,32,128, 512, 2048, 8192, 32768};
   int length = sizeof(sizes)/sizeof(sizes[0]);
 
   // array of pointers to float arrays
@@ -129,29 +128,59 @@ int comparePerformance(){
 
 // for sort function that take array and array length as parameters
 void outputPerformance(char name[], float* array_of_inputs[], int sizes[], int length,  int (*sort_function)(float[], int)){
-  clock_t start_t, end_t, total_t;
+  clock_t start_t, end_t, total_t, start_t_ascending, end_t_ascending, total_t_ascending, start_t_descending, end_t_descending, total_t_descending;
   printf("----------%s------------\n", name);
-  printf("elements\tduration\n" );
+  printf("elements\tduration:\trandom\tascending\tdescending\n" );
   for (int i = 0; i<length; i++){
   start_t = clock();
   sort_function(array_of_inputs[i],sizes[i]);
   end_t = clock();
   total_t = (double)(end_t - start_t);
-  printf("%d\t\t%lu\n", sizes[i], total_t  );
+
+  // time if already ascending sorted array
+  start_t_ascending = clock();
+  sort_function(array_of_inputs[i],sizes[i]);
+  end_t_ascending = clock();
+  total_t_ascending = (double)(end_t_ascending - start_t_ascending);
+
+  bubbleSortDescending(array_of_inputs[i], sizes[i]);
+
+   // time if already descending sorted array
+  start_t_descending = clock();
+  sort_function(array_of_inputs[i],sizes[i]);
+  end_t_descending = clock();
+  total_t_descending = (double)(end_t_descending - start_t_descending);
+
+  printf("%d\t\t\t\t%lu\t%lu\t\t%lu\n", sizes[i], total_t, total_t_ascending, total_t_descending);
   }
 }
 
 // for sort function that take array, start index and end index as parameter
 void outputPerformance2(char name[], float* array_of_inputs[], int sizes[], int length, int (*sort_function)(float[], int, int)){
-  clock_t start_t, end_t, total_t;
+  clock_t start_t, end_t, total_t, start_t_ascending, end_t_ascending, total_t_ascending, start_t_descending, end_t_descending, total_t_descending;
   printf("----------%s------------\n", name);
-  printf("elements\tduration\n" );
+  printf("elements\tduration:\trandom\tascending\tdescending\n" );
   for (int i = 0; i<length; i++){
   start_t = clock();
   sort_function(array_of_inputs[i],0,sizes[i]-1);
   end_t = clock();
   total_t = (double)(end_t - start_t);
-  printf("%d\t\t%lu\n", sizes[i], total_t  );
+
+  // time if already ascending sorted array
+  start_t_ascending = clock();
+  sort_function(array_of_inputs[i],0,sizes[i]-1);
+  end_t_ascending = clock();
+  total_t_ascending = (double)(end_t_ascending - start_t_ascending);
+
+  bubbleSortDescending(array_of_inputs[i], sizes[i]);
+
+   // time if already descending sorted array
+  start_t_descending = clock();
+  sort_function(array_of_inputs[i],0,sizes[i]-1);
+  end_t_descending = clock();
+  total_t_descending = (double)(end_t_descending - start_t_descending);
+
+  printf("%d\t\t\t\t%lu\t%lu\t\t%lu\n", sizes[i], total_t, total_t_ascending, total_t_descending);
   }
 }
 
@@ -186,8 +215,8 @@ void averageTime(){
   free(input);
   free(copy_of_input);
 
-  printf("\n");
   printf("Minimun runtime; %.0f\n", min );
   printf("Maximum runtime; %.0f\n", max );
   printf("Average runtime; %.0f\n", avg);
+  printf("\n");
 }
