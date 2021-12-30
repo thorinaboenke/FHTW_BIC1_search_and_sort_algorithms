@@ -1,43 +1,25 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-/******************************************************************************
- *      swap                                                                  *
- *      @brief swaps two elements in an array                                 *
- *                                                                            *
- *      This function swaps two elements in an array                          *
- *                                                                            *
- *      @param a                address of first element                      *
- *      @param b                address of second element                     *
- *      @retval                                                               *
- ******************************************************************************/
-void swap (float *a, float *b);
+struct Node {
+  int data;
+  struct Node* next;
+};
 
+void swap (int *a, int *b);
 
-/******************************************************************************
- *      initializeArray                                                       *
- *      @brief initializes an array of floats                                 *
- *                                                                            *
- *      This function initializes an array of floats                          *
- *                                                                            *
- *      @param size              size of array                                *
- *      @retval                                                               *
- ******************************************************************************/
-float * initializeArray(int size);
+int * initializeArray(int size);
 
-/******************************************************************************
- *      checkAscending                                                        *
- *      @brief Checks if an Array is sorted in ascending order                *
- *                                                                            *
- *      This function checks if an Array is sorted in ascending order         *
- *                                                                            *
- *      @param arr              array of floats                               *
- *      @param length           size of array                                 *
- *      @retval                                                               *
- ******************************************************************************/
+int checkAscending(int arr[], int length);
 
-int checkAscending(float arr[], int length);
+void printArray(int arr[], int length);
 
-void printArray (float arr[], int length);
+struct Node* getNewNode();
+
+struct Node* initializeList();
+
+void printList(struct Node* head);
+
+void deleteList(struct Node* head);
 
 #endif

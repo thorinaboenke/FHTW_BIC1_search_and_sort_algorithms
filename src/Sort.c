@@ -6,7 +6,7 @@
 
 // swap adjacent elements if they are in the wrong order
 // after one interation the last element is correctly positioned, repeat again until second last element etc.
-int bubbleSort(float arr[], int length){
+int bubbleSort(int arr[], int length){
    for (int i = 0; i<length-1; i++) {
      for (int j = 0; j < length-i-1; j++){
        if ( arr[j] > arr[j+1]){
@@ -17,7 +17,7 @@ int bubbleSort(float arr[], int length){
    return 0;
 }
 
-int bubbleSortDescending(float arr[], int length){
+int bubbleSortDescending(int arr[], int length){
    for (int i = 0; i<length-1; i++) {
      for (int j = 0; j < length-i-1; j++){
        if ( arr[j] < arr[j+1]){
@@ -29,9 +29,9 @@ int bubbleSortDescending(float arr[], int length){
 }
 
 
-int insertionSort(float arr[], int length){
+int insertionSort(int arr[], int length){
   for (int i = 0; i < length; i++) {
-    float value_to_sort = arr[i];
+    int value_to_sort = arr[i];
     int j = i;
     // go backwards through the already sorted array to find the correct position
     // shift already sorted elements that are bigger to the right
@@ -45,13 +45,13 @@ return 0;
 }
 
 // merges two already sorted subarrays into one array
-int merge(float arr[], int low, int middle, int high){
+int merge(int arr[], int low, int middle, int high){
 
   int a1 = middle - low + 1;
   int a2 = high - middle;
 
   // temporary arrays
-  float L[a1], R[a2];
+  int L[a1], R[a2];
 
   // copies data to temporary arrays
   for (int i = 0; i < a1; i++){
@@ -91,7 +91,7 @@ int merge(float arr[], int low, int middle, int high){
   return 0;
 }
 
-int mergeSort(float arr[], int low, int high){
+int mergeSort(int arr[], int low, int high){
   if (low >= high){
     return 0;
   }
@@ -104,9 +104,9 @@ return 0;
 }
 
 // dividing array into two partitions
-int partition(float arr[], int low, int high){
+int partition(int arr[], int low, int high){
   // last Element becomes pivot
-  float pivot = arr[high];
+  int pivot = arr[high];
   // i is temporary pivot index
   int i = (low - 1);
 
@@ -126,7 +126,7 @@ int partition(float arr[], int low, int high){
 
 // selecting a pivot element from the array and partitioning the other elements into two sub-arrays
 // sort sub arrays recursively
-int quickSort(float arr[], int low, int high){
+int quickSort(int arr[], int low, int high){
   if (low < high) {
   // partition array and get pivot index
   int pivot = partition(arr, low, high);
@@ -135,4 +135,32 @@ int quickSort(float arr[], int low, int high){
   quickSort(arr, pivot + 1, high); // sort right side of pivot
   }
   return 0;
+}
+
+struct Node* insertNode(struct Node* sorted, struct Node* new_node){
+  if (sorted == NULL || sorted->data > new_node->data){
+    new_node->next = sorted;
+    sorted = new_node;
+  } else {
+    struct Node* current = sorted;
+    // find place to insert
+    while(current->next != NULL && current->next->data <= new_node->data){
+      current = current->next;
+    }
+    // insert new_node
+    new_node->next = current->next;
+    current->next = new_node;
+  }
+  return sorted;
+}
+
+struct Node* listInsertionSort(struct Node* head){
+  struct Node* sorted = NULL;
+  struct Node* current = head;
+  while(current != NULL){
+    struct Node* temp = current->next;
+    sorted = insertNode(sorted, current);
+    current = temp;
+  }
+  return sorted;
 }
