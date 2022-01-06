@@ -5,8 +5,6 @@
 #include "helper.h"
 #include "sort.h"
 
-
-
 // function prototypes
 int outputSorts();
 int outputSort(char name[], int sizes[], int length);
@@ -108,43 +106,41 @@ int comparePerformance(){
   return 0;
 }
 
-// for sort function that take array and array length as parameters
 void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length) {
   // TODO: make useable unit for ticks
   clock_t total_t, total_t_ascending, total_t_descending;
   printf("----------%s------------\n", name);
   printf("elements\tduration:\trandom\tascending\tdescending\n" );
   for (int i = 0; i<length; i++){
-    // sorted random
+    // random input
     total_t = measureSort(name, array_of_inputs[i], sizes[i]);
 
-    // already sorted ascending
+    // input already sorted ascending
     total_t_ascending = measureSort(name, array_of_inputs[i], sizes[i]);
 
-    // make sort descending
+    // make input descending
     bubbleSortDescending(array_of_inputs[i], sizes[i]);
 
+    // input already sorted descending
     total_t_descending = measureSort(name, array_of_inputs[i], sizes[i]);
 
     printf("%d\t\t\t\t%lu\t%lu\t\t%lu\n", sizes[i], total_t, total_t_ascending, total_t_descending);
   }
 }
 
-
-
 void averageTime(){
   int size = 2000;
   double times[20];
-  int* input = initializeArray(size);
-  int* copy_of_input = initializeArray(size);
+  int* input;
   for (int i= 0; i<20; i++){
-    memcpy(copy_of_input, input, size*sizeof(int));
+    input = initializeArray(size);
     clock_t start_t, end_t, total_t;
     start_t = clock();
-    bubbleSort(copy_of_input, size);
+    bubbleSort(input, size);
     end_t = clock();
     total_t = (double)(end_t - start_t);
     times[i] = total_t;
+    free(input);
   }
   double sum, avg, min, max;
   min = times[0];
@@ -160,8 +156,6 @@ void averageTime(){
     sum += times[j];
   }
   avg = sum/20;
-  free(input);
-  free(copy_of_input);
 
   printf("Minimun runtime; %.0f\n", min );
   printf("Maximum runtime; %.0f\n", max );

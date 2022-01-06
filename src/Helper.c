@@ -17,14 +17,17 @@ void swap(int *a, int *b){
 
 //function to initialize array, allocate memory dynamically and return a int pointer to start address
 int * initializeArray(int size) {
-
-  srand((unsigned int) time(NULL));
+  // seed random function always with the same value so the same numbers are generated
+  srand(1);
 
   int *new_array = (int *)malloc(sizeof(int)*size);
+  if (new_array == NULL){
+    printf("Memory allocation failed");
+    exit(1);
+  }
 
   for(int i = 0; i < size; i++) {
   int random_number = (int)(rand() % 32767);
-  // only 3 decimals
 
   if (rand() % 2 == 1) {
     random_number *= -1;
