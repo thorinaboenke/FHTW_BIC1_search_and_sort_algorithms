@@ -157,7 +157,7 @@ int executeSort(char name[], int arr[], int length) {
     } else if (strcmp(name, "Quicksort") == 0) {
       quickSort(arr, 0, (length-1));
     } else {
-      fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'bub', 'ins', 'mer', 'qui'");
+      fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");
       return 1;
     }
     return 0;
