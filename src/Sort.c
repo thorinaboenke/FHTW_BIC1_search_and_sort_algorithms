@@ -1,8 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
 #include "helper.h"
 #include "search.h"
 
+// global variables
+char bub[] = "Bubblesort";
+char ins[] = "Insertionsort";
+char mer[] = "Mergesort";
+char qui[] = "Quicksort";
 
 // swap adjacent elements if they are in the wrong order
 // after one interation the last element is correctly positioned, repeat again until second last element etc.
@@ -163,4 +170,33 @@ struct Node* listInsertionSort(struct Node* head){
     current = temp;
   }
   return sorted;
+}
+
+int executeSort(char name[], int arr[], int length) {
+  if (strcmp(name,bub) == 0) {
+      printf("bub\n");
+      bubbleSort(arr, length);
+    } else if (strcmp(name, ins) == 0) {
+      printf("ins\n");
+      insertionSort(arr, length);
+    } else if (strcmp(name, mer) == 0) {
+      printf("mer\n");
+      mergeSort(arr, 0, (length-1));
+    } else if (strcmp(name, qui) == 0) {
+      printf("qui\n");
+      quickSort(arr, 0, (length-1));
+    } else {
+      fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");
+      return 1;
+    }
+    return 0;
+}
+
+clock_t measureSort(char name[], int array_of_inputs[], int length) {
+  clock_t start_t, end_t, total_t;
+  start_t = clock();
+  executeSort(name, array_of_inputs, length);
+  end_t = clock();
+  total_t = (double)(end_t - start_t);
+  return total_t;
 }
