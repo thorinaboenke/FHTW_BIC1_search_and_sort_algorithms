@@ -9,8 +9,7 @@
 
 // function prototypes
 int outputSorts();
-void outputSort(char name[], int sizes[], int length, int (*sort_function)(int[], int));
-void outputSort2(char name[], int sizes[], int length, int (*sort_function)(int[], int, int));
+int outputSort(char name[], int sizes[], int length);
 int comparePerformance();
 void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length, int (*sort_function)(int[], int));
 void outputPerformance2(char name[], int* array_of_inputs[], int sizes[], int length, int (*sort_function)(int[], int, int));
@@ -38,41 +37,38 @@ int main(){
 int outputSorts(){
   int sizes[3]= {8,16,64};
   int length = sizeof(sizes)/sizeof(sizes[0]);
-  outputSort(bub, sizes, length, bubbleSort);
-  outputSort(ins, sizes, length, insertionSort);
-  outputSort2(mer, sizes, length, mergeSort);
-  outputSort2(qui, sizes, length, quickSort);
+  outputSort(bub, sizes, length);
+  outputSort(ins, sizes, length);
+  outputSort(mer, sizes, length);
+  outputSort(qui, sizes, length);
   return 0;
 }
 
 // for sort function that take array and array length as parameters
-void outputSort(char name[], int sizes[], int length,  int (*sort_function)(int[], int)){
+int outputSort(char name[], int sizes[], int length) {
   printf("----------%s------------\n", name);
   for (int i=0; i<length; i++) {
-    printf("Array with %d elements\n", sizes[i] );
+    printf("Array with %d elements\n", sizes[i]);
     int * arr = initializeArray(sizes[i]);
     printArray(arr, sizes[i]);
-    sort_function(arr,sizes[i]);
+    if (strcmp(name,"bub")) {
+      bubbleSort(arr, sizes[i]);
+    } else if (strcmp(name, "ins")) {
+      insertionSort(arr, sizes[i]);
+    } else if (strcmp(name, "mer")) {
+      mergeSort(arr, 0, (sizes[i]-1));
+    } else if (strcmp(name, "qui")) {
+      quickSort(arr, 0, (sizes[i]-1));
+    } else {
+      printf("Error. No valid sort function was specified - Use one of: 'bub', 'ins', 'mer', 'qui'");
+      return 1;
+    }
     printArray(arr, sizes[i]);
     checkAscending(arr, sizes[i]);
     printf(" \n");
     free(arr);
   }
-}
-
-// for sort function that take array, start index and end index as parameter
-void outputSort2(char name[], int sizes[], int length,  int (*sort_function)(int[], int, int)){
-  printf("----------%s------------\n", name);
-  for (int i=0; i<length; i++) {
-    printf("Array with %d elements\n", sizes[i] );
-    int * arr = initializeArray(sizes[i]);
-    printArray(arr, sizes[i]);
-    sort_function(arr, 0, (sizes[i]-1));
-    printArray(arr, sizes[i]);
-    checkAscending(arr, sizes[i]);
-    printf(" \n");
-    free(arr);
-  }
+  return 0;
 }
 
 int comparePerformance(){
