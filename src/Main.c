@@ -11,8 +11,9 @@
 int outputSorts();
 int outputSort(char name[], int sizes[], int length);
 int comparePerformance();
-void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length, int (*sort_function)(int[], int));
-void outputPerformance2(char name[], int* array_of_inputs[], int sizes[], int length, int (*sort_function)(int[], int, int));
+int executeSort(char name[], int arr[], int length);
+clock_t measureSort(char name[], int array_of_inputs[], int length);
+void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length);
 void averageTime();
 void compareArrayAndListInsertionSort();
 
@@ -51,18 +52,7 @@ int outputSort(char name[], int sizes[], int length) {
     printf("Array with %d elements\n", sizes[i]);
     int * arr = initializeArray(sizes[i]);
     printArray(arr, sizes[i]);
-    if (strcmp(name,"bub")) {
-      bubbleSort(arr, sizes[i]);
-    } else if (strcmp(name, "ins")) {
-      insertionSort(arr, sizes[i]);
-    } else if (strcmp(name, "mer")) {
-      mergeSort(arr, 0, (sizes[i]-1));
-    } else if (strcmp(name, "qui")) {
-      quickSort(arr, 0, (sizes[i]-1));
-    } else {
-      printf("Error. No valid sort function was specified - Use one of: 'bub', 'ins', 'mer', 'qui'");
-      return 1;
-    }
+    executeSort(name, arr, sizes[i]);
     printArray(arr, sizes[i]);
     checkAscending(arr, sizes[i]);
     printf(" \n");
@@ -92,25 +82,25 @@ int comparePerformance(){
     memcpy(copy_of_input[i], input[i], sizes[i]*sizeof(int));
   }
 
-  outputPerformance(bub, copy_of_input, sizes,length, bubbleSort);
+  outputPerformance(bub, copy_of_input, sizes,length);
   // reset input
   for (int i = 0; i<length; i++){
     memcpy(copy_of_input[i], input[i], sizes[i]*sizeof(int));
   }
 
-  outputPerformance(ins, copy_of_input, sizes, length, insertionSort);
+  outputPerformance(ins, copy_of_input, sizes, length);
   // reset input
   for (int i = 0; i<length; i++){
     memcpy(copy_of_input[i], input[i], sizes[i]*sizeof(int));
   }
 
-  outputPerformance2(qui, copy_of_input, sizes, length, quickSort);
+  outputPerformance(qui, copy_of_input, sizes, length);
   // reset input
   for (int i = 0; i<length; i++){
     memcpy(copy_of_input[i], input[i], sizes[i]*sizeof(int));
   }
 
-  outputPerformance2(mer, copy_of_input, sizes, length, mergeSort);
+  outputPerformance(mer, copy_of_input, sizes, length);
   // reset input
   for (int i = 0; i<length; i++){
     memcpy(copy_of_input[i], input[i], sizes[i]*sizeof(int));
@@ -127,61 +117,50 @@ int comparePerformance(){
 }
 
 // for sort function that take array and array length as parameters
-void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length,  int (*sort_function)(int[], int)){
-  clock_t start_t, end_t, total_t, total_t_ascending, total_t_descending;
+void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length) {
+  // TODO: make useable unit for ticks
+  clock_t total_t, total_t_ascending, total_t_descending;
   printf("----------%s------------\n", name);
   printf("elements\tduration:\trandom\tascending\tdescending\n" );
   for (int i = 0; i<length; i++){
-  start_t = clock();
-  sort_function(array_of_inputs[i],sizes[i]);
-  end_t = clock();
-  total_t = (double)(end_t - start_t);
+    // sorted random
+    total_t = measureSort(name, array_of_inputs[i], sizes[i]);
 
-  // time if already ascending sorted array
-  start_t = clock();
-  sort_function(array_of_inputs[i],sizes[i]);
-  end_t = clock();
-  total_t_ascending = (double)(end_t - start_t);
+    // already sorted ascending
+    total_t_ascending = measureSort(name, array_of_inputs[i], sizes[i]);
 
-  bubbleSortDescending(array_of_inputs[i], sizes[i]);
+    // make sort descending
+    bubbleSortDescending(array_of_inputs[i], sizes[i]);
 
-   // time if already descending sorted array
-  start_t = clock();
-  sort_function(array_of_inputs[i],sizes[i]);
-  end_t = clock();
-  total_t_descending = (double)(end_t - start_t);
+    total_t_descending = measureSort(name, array_of_inputs[i], sizes[i]);
 
-  printf("%d\t\t\t\t%lu\t%lu\t\t%lu\n", sizes[i], total_t, total_t_ascending, total_t_descending);
+    printf("%d\t\t\t\t%lu\t%lu\t\t%lu\n", sizes[i], total_t, total_t_ascending, total_t_descending);
   }
 }
 
-// for sort function that take array, start index and end index as parameter
-void outputPerformance2(char name[], int* array_of_inputs[], int sizes[], int length, int (*sort_function)(int[], int, int)){
-  clock_t start_t, end_t, total_t, start_t_ascending, end_t_ascending, total_t_ascending, start_t_descending, end_t_descending, total_t_descending;
-  printf("----------%s------------\n", name);
-  printf("elements\tduration:\trandom\tascending\tdescending\n" );
-  for (int i = 0; i<length; i++){
+clock_t measureSort(char name[], int array_of_inputs[], int length) {
+  clock_t start_t, end_t, total_t;
   start_t = clock();
-  sort_function(array_of_inputs[i],0,sizes[i]-1);
+  executeSort(name, array_of_inputs, length);
   end_t = clock();
   total_t = (double)(end_t - start_t);
+  return total_t;
+}
 
-  // time if already ascending sorted array
-  start_t_ascending = clock();
-  sort_function(array_of_inputs[i],0,sizes[i]-1);
-  end_t_ascending = clock();
-  total_t_ascending = (double)(end_t_ascending - start_t_ascending);
-
-  bubbleSortDescending(array_of_inputs[i], sizes[i]);
-
-   // time if already descending sorted array
-  start_t_descending = clock();
-  sort_function(array_of_inputs[i],0,sizes[i]-1);
-  end_t_descending = clock();
-  total_t_descending = (double)(end_t_descending - start_t_descending);
-
-  printf("%d\t\t\t\t%lu\t%lu\t\t%lu\n", sizes[i], total_t, total_t_ascending, total_t_descending);
-  }
+int executeSort(char name[], int arr[], int length) {
+  if (strcmp(name,"bub")) {
+      bubbleSort(arr, length);
+    } else if (strcmp(name, "ins")) {
+      insertionSort(arr, length);
+    } else if (strcmp(name, "mer")) {
+      mergeSort(arr, 0, (length-1));
+    } else if (strcmp(name, "qui")) {
+      quickSort(arr, 0, (length-1));
+    } else {
+      printf("Error. No valid sort function was specified - Use one of: 'bub', 'ins', 'mer', 'qui'");
+      return 1;
+    }
+    return 0;
 }
 
 void averageTime(){
