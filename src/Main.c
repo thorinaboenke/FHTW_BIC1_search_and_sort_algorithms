@@ -11,17 +11,9 @@
 int outputSorts();
 int outputSort(char name[], int sizes[], int length);
 int comparePerformance();
-int executeSort(char name[], int arr[], int length);
-clock_t measureSort(char name[], int array_of_inputs[], int length);
 void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length);
 void averageTime();
 void compareArrayAndListInsertionSort();
-
-// global variables
-char bub[] = "Bubblesort";
-char ins[] = "Insertionsort";
-char mer[] = "Mergesort";
-char qui[] = "Quicksort";
 
 int main(){
   printf("1.1 Implement sort algorithms\n");
@@ -138,30 +130,7 @@ void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int len
   }
 }
 
-clock_t measureSort(char name[], int array_of_inputs[], int length) {
-  clock_t start_t, end_t, total_t;
-  start_t = clock();
-  executeSort(name, array_of_inputs, length);
-  end_t = clock();
-  total_t = (double)(end_t - start_t);
-  return total_t;
-}
 
-int executeSort(char name[], int arr[], int length) {
-  if (strcmp(name,"Bubblesort") == 0) {
-      bubbleSort(arr, length);
-    } else if (strcmp(name, "Insertionsort") == 0) {
-      insertionSort(arr, length);
-    } else if (strcmp(name, "Mergesort") == 0) {
-      mergeSort(arr, 0, (length-1));
-    } else if (strcmp(name, "Quicksort") == 0) {
-      quickSort(arr, 0, (length-1));
-    } else {
-      fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");
-      return 1;
-    }
-    return 0;
-}
 
 void averageTime(){
   int size = 2000;
