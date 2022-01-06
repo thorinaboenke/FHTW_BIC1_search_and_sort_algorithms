@@ -173,13 +173,17 @@ struct Node* listInsertionSort(struct Node* head){
 }
 
 int executeSort(char name[], int arr[], int length) {
-  if (strcmp(name,"Bubblesort") == 0) {
+  if (strcmp(name,bub) == 0) {
+      printf("bub\n");
       bubbleSort(arr, length);
-    } else if (strcmp(name, "Insertionsort") == 0) {
+    } else if (strcmp(name, ins) == 0) {
+      printf("ins\n");
       insertionSort(arr, length);
-    } else if (strcmp(name, "Mergesort") == 0) {
+    } else if (strcmp(name, mer) == 0) {
+      printf("mer\n");
       mergeSort(arr, 0, (length-1));
-    } else if (strcmp(name, "Quicksort") == 0) {
+    } else if (strcmp(name, qui) == 0) {
+      printf("qui\n");
       quickSort(arr, 0, (length-1));
     } else {
       fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");
