@@ -148,13 +148,13 @@ clock_t measureSort(char name[], int array_of_inputs[], int length) {
 }
 
 int executeSort(char name[], int arr[], int length) {
-  if (strcmp(name,"bub")) {
+  if (strcmp(name,"Bubblesort") == 0) {
       bubbleSort(arr, length);
-    } else if (strcmp(name, "ins")) {
+    } else if (strcmp(name, "Insertionsort") == 0) {
       insertionSort(arr, length);
-    } else if (strcmp(name, "mer")) {
+    } else if (strcmp(name, "Mergesort") == 0) {
       mergeSort(arr, 0, (length-1));
-    } else if (strcmp(name, "qui")) {
+    } else if (strcmp(name, "Quicksort") == 0) {
       quickSort(arr, 0, (length-1));
     } else {
       fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'bub', 'ins', 'mer', 'qui'");
