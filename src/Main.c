@@ -22,6 +22,13 @@ int main(){
   averageTime();
   printf("1.4 Insertion Sort in array vs. lists.\n");
   compareArrayAndListInsertionSort();
+  printf("2.1 Sort and list - self-implemented.\n");
+  // TODO encapsulate the following statements into an function
+  // TODO create 400 elements in array
+  Element *arr = initializeArrayOfElements(5);
+  printArrayOfElements(arr, 5);
+  searchForInput(arr, 0, 5);
+  printArrayOfElements(arr, 5);
   return 0;
 }
 

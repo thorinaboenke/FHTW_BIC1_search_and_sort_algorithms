@@ -3,10 +3,52 @@
 #include <time.h>
 #include <math.h>
 
+// TODO: do we have to declare these two strucuts in this file and the header file too?
 struct Node {
   int data;
   struct Node* next;
 };
+
+typedef struct Element {
+  int number;
+  char letters[3];
+} Element;
+
+Element * initializeArrayOfElements(int size) {
+  time_t t;
+  srand((unsigned) time(&t));
+
+  // TODO maybe there is a better way to create a random string sequence?
+  const char* alphabeth = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  Element *new_array = (Element *)malloc(sizeof(Element)*size);
+  if (new_array == NULL){
+    printf("Memory allocation failed");
+    exit(1);
+  }
+
+  // fill each array element with a random number and a random string sequence
+  for (int i = 0; i < size; i++) {
+    (new_array+i)->number = (int)(rand() % 32767);
+
+    // create a random character from 'aphabet' for the size of struct Element member 'letters'
+    for (int j = 0; j < sizeof(new_array->letters); j++) {
+      int tmp = rand() % 26;
+      (new_array+i)->letters[j] = alphabeth[tmp];
+    }
+  }
+  return new_array;
+}
+
+void printArrayOfElements(Element arr[], int length) {
+  for (int i = 0; i < length; i++){
+    printf("Element %d: numbers: %d - letters: %s\n", i, (arr+i)->number, (arr+i)->letters);
+    if ( i != 0 && (i+1) % 15 == 0){
+      printf("\n");
+    }
+  }
+  printf("\n");
+}
 
 // helper function to swap array elements
 void swap(int *a, int *b){
@@ -14,6 +56,13 @@ void swap(int *a, int *b){
     *a = *b;
     *b = temp;
   }
+
+// helper function to swap elements in array of struct 'Element'
+void swapElements(Element *a, Element *b) {
+  Element temp = *a;
+  *a = *b;
+  *b = temp;
+}
 
 //function to initialize array, allocate memory dynamically and return a int pointer to start address
 int * initializeArray(int size) {
