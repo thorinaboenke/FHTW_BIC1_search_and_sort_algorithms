@@ -248,11 +248,9 @@ int searchForNumber(Element arr[], int target, int size) {
   // first choose middle of array
   int middle;
   // if size is even, middle is offset by 1 to the right
-  if (size % 2 == 0) {
-    middle = size / 2;
-  } else {
-    middle = (size - 1) / 2;
-  }
+  // if size is odd, int devision by 2 rounds down automatically
+  middle = size / 2;
+
   if (size > 0) {
     // check if selected middle is already the target element
     if ((arr+middle)->number == target) {
