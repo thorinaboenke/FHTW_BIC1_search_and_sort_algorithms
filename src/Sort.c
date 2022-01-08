@@ -228,18 +228,20 @@ int searchForNumber(Element arr[], int target, int size) {
   // if size is odd, int devision by 2 rounds down automatically
   middle = size / 2;
 
-  if (size > 0) {
-    // check if selected middle is already the target element
-    if ((arr+middle)->number == target) {
-      printf("Found it!\n");
-      printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
-    } // if target is bigger than middle call searchForNumber on right half of the array
-    else if ((arr+middle)->number < target) {
-      searchForNumber(arr+middle, target, size - middle);
-    } // if target is smaller than middle call searchForNumber on left half of the array
-    else if ((arr+middle)->number > target) {
-      searchForNumber(arr, target, middle);
-    }
+  // exit condition for recursive function
+  if (size <= 0) {
+    return 0;
+  }
+  // check if selected middle is already the target element
+  if ((arr+middle)->number == target) {
+    printf("Found it!\n");
+    printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
+  } // if target is bigger than middle call searchForNumber on right half of the array
+  else if ((arr+middle)->number < target) {
+    searchForNumber(arr+middle, target, size - middle);
+  } // if target is smaller than middle call searchForNumber on left half of the array
+  else if ((arr+middle)->number > target) {
+    searchForNumber(arr, target, middle);
   }
   return 0;
 }
@@ -253,16 +255,19 @@ int searchForLetters(Element arr[], char target[], int size) {
   // if size is odd, int devision by 2 rounds down automatically
   middle = size / 2;
 
-  if (size > 0) {
-    // check if selected middle is already the target element
-    if (strcmp((arr+middle)->letters, target) == 0) {
-      printf("Found one!\n");
-      printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
-    } else if (strcmp(target, (arr+middle)->letters) > 0) {
-      searchForLetters(arr+middle, target, size - middle);
-    } else if (strcmp(target, (arr+middle)->letters) < 0) {
-      searchForLetters(arr, target, middle);
-    }
+  // exit condition for recursive function
+  if (size <= 0) {
+    return 0;
+  }
+
+  // check if selected middle is already the target element
+  if (strcmp((arr+middle)->letters, target) == 0) {
+    printf("Found one!\n");
+    printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
+  } else if (strcmp(target, (arr+middle)->letters) > 0) {
+    searchForLetters(arr+middle, target, size - middle);
+  } else if (strcmp(target, (arr+middle)->letters) < 0) {
+    searchForLetters(arr, target, middle);
   }
   return 0;
 }
