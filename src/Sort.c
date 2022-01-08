@@ -179,29 +179,6 @@ int partitionWithElementsByNumber(Element arr[], int low, int high){
   return (i+1);
 }
 
-// will return 0 if first param is bigger than second
-// otherwise returns 1
-int isBiggerOrSameCharset(char charset[], char charset2[]) {
-  int result;
-  // checks all 3 letters in letters array for size
-  // TODO use global variable instead of '3'
-  for (int i = 0; i < 3; i++) {
-    if (charset[i] > charset2[i]) {
-      result = 0;
-      // break here if first letter was bigger
-      break;
-    } else if (charset[i] == charset2[i]) {
-      result = 0;
-      // continue looking for the bigger letter
-    } else {
-      result = 1;
-      // break here if first letter was smaller
-      break;
-    }
-  }
-  return result;
-}
-
 int partitionWithElementsByLetters(Element arr[], int low, int high) {
   // last Element becomes pivot
   char *pivot = (arr+high)->letters;
@@ -211,7 +188,7 @@ int partitionWithElementsByLetters(Element arr[], int low, int high) {
 
   // for all elements smaller than pivot move them to the left
   for (int j = low; j < high; j++){
-    if (isBiggerOrSameCharset(pivot, (arr+j)->letters) == 0){
+    if (strcmp(pivot, (arr+j)->letters) >= 0){
        // move temporary pivot index forward
       i++;
       // swap current element with the element at the temporary pivot
@@ -273,21 +250,17 @@ int searchForLetters(Element arr[], char target[], int size) {
   // first choose middle of array
   int middle;
   // if size is even, middle is offset by 1 to the right
-  if (size % 2 == 0) {
-    middle = size / 2;
-  } else {
-    middle = (size - 1) / 2;
-  }
+  // if size is odd, int devision by 2 rounds down automatically
+  middle = size / 2;
+
   if (size > 0) {
     // check if selected middle is already the target element
     if (strcmp((arr+middle)->letters, target) == 0) {
       printf("Found one!\n");
       printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
-    } else if (isBiggerOrSameCharset(target, (arr+middle)->letters) == 0) {
+    } else if (strcmp(target, (arr+middle)->letters) > 0) {
       searchForLetters(arr+middle, target, size - middle);
-      //printf("Went to the right\n");
-    } else if (isBiggerOrSameCharset((arr+middle)->letters, target) == 0) {
-      //printf("Went to the left\n");
+    } else if (strcmp(target, (arr+middle)->letters) < 0) {
       searchForLetters(arr, target, middle);
     }
   }
