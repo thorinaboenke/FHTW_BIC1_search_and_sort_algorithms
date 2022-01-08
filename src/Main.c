@@ -12,6 +12,7 @@ int comparePerformance();
 void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length);
 void averageTime();
 void compareArrayAndListInsertionSort();
+int sortAndSearchElements();
 
 int main(){
   printf("1.1 Implement sort algorithms\n");
@@ -23,12 +24,19 @@ int main(){
   printf("1.4 Insertion Sort in array vs. lists.\n");
   compareArrayAndListInsertionSort();
   printf("2.1 Sort and list - self-implemented.\n");
-  // TODO encapsulate the following statements into an function
-  // TODO create 400 elements in array
-  Element *arr = initializeArrayOfElements(5);
-  printArrayOfElements(arr, 5);
-  searchForInput(arr, 0, 5);
-  printArrayOfElements(arr, 5);
+  sortAndSearchElements();
+
+  return 0;
+}
+
+int sortAndSearchElements() {
+  int size = 400;
+  Element *arr = initializeArrayOfElements(size);
+  printArrayOfElements(arr, size);
+  searchForInput(arr, 0, size);
+  //can be used to output sorted array:
+  //printArrayOfElements(arr, size);
+  free(arr);
   return 0;
 }
 
