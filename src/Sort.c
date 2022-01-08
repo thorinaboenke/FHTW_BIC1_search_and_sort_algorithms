@@ -253,7 +253,7 @@ int searchForLetters(Element arr[], char target[], int size) {
   // first choose middle of array
   int middle;
   // if size is even, middle is offset by 1 to the right
-  // if size is odd, int devision by 2 rounds down automatically
+  // if size is odd, int division by 2 rounds down automatically
   middle = size / 2;
 
   // exit condition for recursive function
