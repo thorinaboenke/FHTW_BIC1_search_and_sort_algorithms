@@ -208,7 +208,7 @@ int quickSortWithElements(Element arr[], int low, int high, bool sortByNumber){
     if (sortByNumber == true) {
       // partition array and get pivot index sorted by numbers
       pivot = partitionWithElementsByNumber(arr, low, high);
-    } else if (sortByNumber == false) {
+    } else {
       // partition array and get pivot index sorted by letters
       pivot = partitionWithElementsByLetters(arr, low, high);
     }
