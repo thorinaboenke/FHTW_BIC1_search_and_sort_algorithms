@@ -230,6 +230,7 @@ int searchForNumber(Element arr[], int target, int size) {
 
   // exit condition for recursive function
   if (size <= 0) {
+    printf("Element was not found.\n");
     return 0;
   }
   // check if selected middle is already the target element
@@ -257,6 +258,7 @@ int searchForLetters(Element arr[], char target[], int size) {
 
   // exit condition for recursive function
   if (size <= 0) {
+    printf("Element was not found.\n");
     return 0;
   }
 
