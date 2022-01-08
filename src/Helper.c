@@ -18,8 +18,6 @@ Element * initializeArrayOfElements(int size) {
   time_t t;
   srand((unsigned) time(&t));
 
-  // TODO maybe there is a better way to create a random string sequence?
-  const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   Element *new_array = (Element *)malloc(sizeof(Element)*size);
   if (new_array == NULL){
@@ -31,10 +29,9 @@ Element * initializeArrayOfElements(int size) {
   for (int i = 0; i < size; i++) {
     (new_array+i)->number = (int)(rand() % 32767);
 
-    // create a random character from 'aphabet' for the size of struct Element member 'letters'
+    // create a random character (ASCII between 65 and 90) for the size of struct Element member 'letters'
     for (int j = 0; j < sizeof(new_array->letters); j++) {
-      int tmp = rand() % 26;
-      (new_array+i)->letters[j] = alphabet[tmp];
+      (new_array+i)->letters[j] = 65 + (rand() % 26);
     }
   }
   return new_array;
