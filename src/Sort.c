@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
 #include "helper.h"
 #include "search.h"
 
@@ -201,20 +202,19 @@ int partitionWithElementsByLetters(Element arr[], int low, int high) {
 
 // executes quick sort on array of Element
 // either sorting it by numbers or letters depending on kind (either 'l' or 'n')
-int quickSortWithElements(Element arr[], int low, int high, char *kind){
+int quickSortWithElements(Element arr[], int low, int high, bool sortByNumber){
   if (low < high) {
     int pivot;
-    // TODO is there a better way to differentiate between those two ways of sorting?
-    if (strcmp(kind, "n") == 0) {
+    if (sortByNumber == true) {
       // partition array and get pivot index sorted by numbers
       pivot = partitionWithElementsByNumber(arr, low, high);
-    } else if (strcmp(kind, "l") == 0) {
+    } else if (sortByNumber == false) {
       // partition array and get pivot index sorted by letters
       pivot = partitionWithElementsByLetters(arr, low, high);
     }
     // Sort the two partitions
-    quickSortWithElements(arr, low, pivot - 1, kind); // sort left side of pivot
-    quickSortWithElements(arr, pivot + 1, high, kind); // sort right side of pivot
+    quickSortWithElements(arr, low, pivot - 1, sortByNumber); // sort left side of pivot
+    quickSortWithElements(arr, pivot + 1, high, sortByNumber); // sort right side of pivot
   }
   return 0;
 }
@@ -279,14 +279,14 @@ int searchForInput(Element arr[], int low, int high) {
       int number = 0;
       printf("Type in the number you want to search for:\n");
       scanf("%d", &number);
-      quickSortWithElements(arr, low, high-1, "n");
+      quickSortWithElements(arr, low, high-1, true);
       searchForNumber(arr, number, high);
       break;
     case 2:
       printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
       char letters[3];
       scanf("%s", letters);
-      quickSortWithElements(arr, low, high-1, "l");
+      quickSortWithElements(arr, low, high-1, false);
       searchForLetters(arr, letters, high);
       break;
     case 0:
