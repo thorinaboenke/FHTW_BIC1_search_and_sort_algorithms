@@ -249,6 +249,7 @@ int searchForNumber(Element arr[], int target, int size) {
 
 // searches for given string sequence in array of Element of given size already sorted by letters
 // starts searching in the middle of array and goes left or right depending on target element
+// TODO searching for non existent element gives seg fault --> fix
 int searchForLetters(Element arr[], char target[], int size) {
   // first choose middle of array
   int middle;
@@ -278,30 +279,37 @@ int searchForLetters(Element arr[], char target[], int size) {
 int searchForInput(Element arr[], int low, int high) {
   int input = 1;
   while (input != 0) {
-    printf("Do you want to search for numbers (type '1') or letters (type '2'):\nOr press '0' to quit.\n");
-    scanf("%d", &input);
+    printf("Do you want to search for numbers (type '1') or letters (type '2'):\nOr press any other key to quit.\n");
+    if (scanf("%d", &input) == 0){
+      printf("Quitting...\n");
+      return 0;
+    };
 
     switch (input) {
     case 1:;
       int number = 0;
       printf("Type in the number you want to search for:\n");
       scanf("%d", &number);
+      fflush(stdin);
+      while(!number){
+      printf("Input Invalid. Type in the number you want to search for:\n");
+      scanf("%d", &number);
+      fflush(stdin);
+      }
       quickSortWithElements(arr, low, high-1, true);
       searchForNumber(arr, number, high);
       break;
     case 2:
       printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
       char letters[3];
+      // TODO use fgets instead to limit read characters to 3 ?
       scanf("%s", letters);
       quickSortWithElements(arr, low, high-1, false);
       searchForLetters(arr, letters, high);
       break;
-    case 0:
-      printf("Quitting...\n");
-      break;
     default:
-      fprintf(stderr, "Error: Did not provide valid input - choose either '1' or '2'\n");
-      return 1;
+      printf("Quitting...\n");
+      return 0;
       break;
     }
   }
