@@ -36,6 +36,9 @@ int sortAndSearchElements() {
   searchForInput(arr, 0, size);
   //can be used to output sorted array:
   //printArrayOfElements(arr, size);
+  for (int i = 0; i < size; i++){
+    free((arr+i)->letters);
+  }
   free(arr);
   return 0;
 }
