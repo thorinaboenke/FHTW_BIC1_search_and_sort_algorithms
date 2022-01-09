@@ -229,7 +229,7 @@ int searchForNumber(Element arr[], int target, int size) {
   middle = size / 2;
 
   // exit condition for recursive function
-  if (size <= 0) {
+  if (middle <= 0) {
     printf("Element was not found.\n");
     return 0;
   }
@@ -258,7 +258,7 @@ int searchForLetters(Element arr[], char target[], int size) {
   middle = size / 2;
 
   // exit condition for recursive function
-  if (size <= 0) {
+  if (middle <= 0) {
     printf("Element was not found.\n");
     return 0;
   }
@@ -284,7 +284,7 @@ int searchForInput(Element arr[], int low, int high) {
       printf("Quitting...\n");
       return 0;
     };
-
+    fflush(stdin);
     switch (input) {
     case 1:;
       int number = 0;
@@ -301,16 +301,15 @@ int searchForInput(Element arr[], int low, int high) {
       break;
     case 2:
       printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
-      char letters[3];
-      // TODO use fgets instead to limit read characters to 3 ?
-      scanf("%s", letters);
+      char letters[4];
+      fgets(letters, 4, stdin );
+      fflush(stdin);
       quickSortWithElements(arr, low, high-1, false);
       searchForLetters(arr, letters, high);
       break;
     default:
       printf("Quitting...\n");
       return 0;
-      break;
     }
   }
   return 0;
