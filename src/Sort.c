@@ -2,14 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
 #include "helper.h"
 #include "search.h"
+
+// TODO: make charset length a global variable and use everywhere
 
 // global variables
 char bub[] = "Bubblesort";
 char ins[] = "Insertionsort";
 char mer[] = "Mergesort";
 char qui[] = "Quicksort";
+
+
+// BUBBLE SORT
 
 // swap adjacent elements if they are in the wrong order
 // after one interation the last element is correctly positioned, repeat again until second last element etc.
@@ -35,6 +41,7 @@ int bubbleSortDescending(int arr[], int length){
    return 0;
 }
 
+// INSERTION SORT
 
 int insertionSort(int arr[], int length){
   for (int i = 0; i < length; i++) {
@@ -50,6 +57,8 @@ int insertionSort(int arr[], int length){
   }
 return 0;
 }
+
+// MERGE SORT
 
 // merges two already sorted subarrays into one array
 int merge(int arr[], int low, int middle, int high){
@@ -110,13 +119,17 @@ int mergeSort(int arr[], int low, int high){
 return 0;
 }
 
+// QUICK SORT OF INT ARRAY
+
 // dividing array into two partitions
 int partition(int arr[], int low, int high){
   // last Element becomes pivot
   int pivot = arr[high];
-  // i is temporary pivot index
+  // i is temporary pivot index - marks the index in the array, where everything with a smaller index (to the left)
+  // is already smaller than the pivot itself, but not sorted itself
   int i = (low - 1);
 
+  // for all elements smaller than pivot move them to the left
   for (int j = low; j < high; j++){
     if (arr[j] <= pivot){
        // move temporary pivot index forward
@@ -143,6 +156,166 @@ int quickSort(int arr[], int low, int high){
   }
   return 0;
 }
+
+// QUICK SORT OF ARRAY OF 'ELEMENT'
+
+int partitionWithElementsByNumber(Element arr[], int low, int high){
+  // last Element becomes pivot
+  int pivot = (arr+high)->number;
+  // i is temporary pivot index - marks the index in the array, where everything with a smaller index (to the left)
+  // is already smaller than the pivot itself, but not sorted itself
+  int i = (low - 1);
+
+  // for all elements smaller than pivot move them to the left
+  for (int j = low; j < high; j++){
+    if ((arr+j)->number <= pivot){
+       // move temporary pivot index forward
+      i++;
+      // swap current element with the element at the temporary pivot
+      swapElements(arr+i, arr+j);
+    }
+  }
+  // move the pivot element to the correct pivot position (between smaller and larger elements)
+  swapElements(arr+i+1, arr+high);
+  return (i+1);
+}
+
+int partitionWithElementsByLetters(Element arr[], int low, int high) {
+  // last Element becomes pivot
+  char *pivot = (arr+high)->letters;
+  // i is temporary pivot index - marks the index in the array, where everything with a smaller index (to the left)
+  // is already smaller than the pivot itself, but not sorted itself
+  int i = (low - 1);
+
+  // for all elements smaller than pivot move them to the left
+  for (int j = low; j < high; j++){
+    if (strcmp(pivot, (arr+j)->letters) >= 0){
+       // move temporary pivot index forward
+      i++;
+      // swap current element with the element at the temporary pivot
+      swapElements(arr+i, arr+j);
+    }
+  }
+  swapElements(arr+i+1, arr+high);
+  return (i+1);
+}
+
+// executes quick sort on array of Element
+// either sorting it by numbers or letters depending on kind (either 'l' or 'n')
+int quickSortWithElements(Element arr[], int low, int high, bool sortByNumber){
+  if (low < high) {
+    int pivot;
+    if (sortByNumber == true) {
+      // partition array and get pivot index sorted by numbers
+      pivot = partitionWithElementsByNumber(arr, low, high);
+    } else {
+      // partition array and get pivot index sorted by letters
+      pivot = partitionWithElementsByLetters(arr, low, high);
+    }
+    // Sort the two partitions
+    quickSortWithElements(arr, low, pivot - 1, sortByNumber); // sort left side of pivot
+    quickSortWithElements(arr, pivot + 1, high, sortByNumber); // sort right side of pivot
+  }
+  return 0;
+}
+
+// searches for given integer in and array of Element of given size already sorted by numbers
+// starts searching in the middle of array and goes left or right depending on target element
+int searchForNumber(Element arr[], int target, int size) {
+  // first choose middle of array
+  int middle;
+  // if size is even, middle is offset by 1 to the right
+  // if size is odd, int devision by 2 rounds down automatically
+  middle = size / 2;
+
+  // exit condition for recursive function
+  if (middle <= 0) {
+    printf("Element was not found.\n");
+    return 0;
+  }
+  // check if selected middle is already the target element
+  if ((arr+middle)->number == target) {
+    printf("Found it!\n");
+    printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
+  } // if target is bigger than middle call searchForNumber on right half of the array
+  else if ((arr+middle)->number < target) {
+    searchForNumber(arr+middle, target, size - middle);
+  } // if target is smaller than middle call searchForNumber on left half of the array
+  else if ((arr+middle)->number > target) {
+    searchForNumber(arr, target, middle);
+  }
+  return 0;
+}
+
+// searches for given string sequence in array of Element of given size already sorted by letters
+// starts searching in the middle of array and goes left or right depending on target element
+// TODO searching for non existent element gives seg fault --> fix
+int searchForLetters(Element arr[], char target[], int size) {
+  // first choose middle of array
+  int middle;
+  // if size is even, middle is offset by 1 to the right
+  // if size is odd, int division by 2 rounds down automatically
+  middle = size / 2;
+
+  // exit condition for recursive function
+  if (middle <= 0) {
+    printf("Element was not found.\n");
+    return 0;
+  }
+
+  // check if selected middle is already the target element
+  if (strcmp((arr+middle)->letters, target) == 0) {
+    printf("Found one!\n");
+    printf("Number: %d - Letters: %s\n", (arr+middle)->number, (arr+middle)->letters);
+  } else if (strcmp(target, (arr+middle)->letters) > 0) {
+    searchForLetters(arr+middle, target, size - middle);
+  } else if (strcmp(target, (arr+middle)->letters) < 0) {
+    searchForLetters(arr, target, middle);
+  }
+  return 0;
+}
+
+// continiously searches for input from stdin for either a given number or given string sequence in array of Element
+int searchForInput(Element arr[], int low, int high) {
+  int input = 1;
+  while (input != 0) {
+    printf("Do you want to search for numbers (type '1') or letters (type '2'):\nOr press any other key to quit.\n");
+    if (scanf("%d", &input) == 0){
+      printf("Quitting...\n");
+      return 0;
+    };
+    fflush(stdin);
+    switch (input) {
+    case 1:;
+      int number = 0;
+      printf("Type in the number you want to search for:\n");
+      scanf("%d", &number);
+      fflush(stdin);
+      while(!number){
+      printf("Input Invalid. Type in the number you want to search for:\n");
+      scanf("%d", &number);
+      fflush(stdin);
+      }
+      quickSortWithElements(arr, low, high-1, true);
+      searchForNumber(arr, number, high);
+      break;
+    case 2:
+      printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
+      char letters[4];
+      fgets(letters, 4, stdin );
+      fflush(stdin);
+      quickSortWithElements(arr, low, high-1, false);
+      searchForLetters(arr, letters, high);
+      break;
+    default:
+      printf("Quitting...\n");
+      return 0;
+    }
+  }
+  return 0;
+}
+
+// INSERTION SORT WITH LIST
 
 struct Node* insertNode(struct Node* sorted, struct Node* new_node){
   if (sorted == NULL || sorted->data > new_node->data){
@@ -171,6 +344,8 @@ struct Node* listInsertionSort(struct Node* head){
   }
   return sorted;
 }
+
+// HELPER FUNCTIONS
 
 int executeSort(char name[], int arr[], int length) {
   if (strcmp(name,bub) == 0) {
