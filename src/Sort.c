@@ -1,3 +1,6 @@
+/** \file
+* \brief this file implements different sort and search algorithms*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -6,19 +9,23 @@
 #include "helper.h"
 #include "search.h"
 
-// TODO: make charset length a global variable and use everywhere
-
 // global variables
 char bub[] = "Bubblesort";
 char ins[] = "Insertionsort";
 char mer[] = "Mergesort";
 char qui[] = "Quicksort";
 
+/**
+ BUBBLE SORT - sorts an array of integer in ascending order
 
-// BUBBLE SORT
+ swaps adjacent elements if they are in the wrong order with swap().
+ after one interation the last element is correctly positioned, then repeat again until second last element etc.
 
-// swap adjacent elements if they are in the wrong order
-// after one interation the last element is correctly positioned, repeat again until second last element etc.
+ \param arr an array of integers
+ \param length int length of the array
+
+  \return 0 on completion
+ */
 int bubbleSort(int arr[], int length){
    for (int i = 0; i<length-1; i++) {
      for (int j = 0; j < length-i-1; j++){
@@ -30,6 +37,17 @@ int bubbleSort(int arr[], int length){
    return 0;
 }
 
+/**
+ BUBBLE SORT ASCENDING - sorts an array of integer in descending order
+
+ swaps adjacent elements if they are in the wrong order with swap().
+ after one interation the last element is correctly positioned, then repeat again until second last element etc.
+
+ \param arr an array of integers
+ \param length int length of the array
+
+  \return 0 on completion
+ */
 int bubbleSortDescending(int arr[], int length){
    for (int i = 0; i<length-1; i++) {
      for (int j = 0; j < length-i-1; j++){
@@ -41,8 +59,17 @@ int bubbleSortDescending(int arr[], int length){
    return 0;
 }
 
-// INSERTION SORT
+/**
+ INSERTION SORT - sorts an array of integer in ascending order
+ Starts with leftmost element.
+ Goes backwards through the already sorted array to find the correct position.
+ Shifts already sorted elements that are bigger to the right.
 
+ \param arr an array of integers
+ \param length int length of the array
+
+ \return 0 on completion
+ */
 int insertionSort(int arr[], int length){
   for (int i = 0; i < length; i++) {
     int value_to_sort = arr[i];
@@ -58,9 +85,23 @@ int insertionSort(int arr[], int length){
 return 0;
 }
 
-// MERGE SORT
 
-// merges two already sorted subarrays into one array
+/**
+ Merges two already sorted subarrays into one array
+
+ Creates two temporary arrays. Copies the data of the subarrays to temporary arrays.
+ Until reaching the end of either subarray, picks larger among the elements and places it in correct position in arr.
+ When running out of Elements in either of the two temporary subarrays, remaining elements in the other are put in arr.
+
+ \param arr int[] an array of integers
+ \param low int index first element
+ \param middle int index middle element
+ \param high int index last element
+
+ \return 0 on completion
+
+ */
+
 int merge(int arr[], int low, int middle, int high){
 
   int a1 = middle - low + 1;
@@ -107,6 +148,18 @@ int merge(int arr[], int low, int middle, int high){
   return 0;
 }
 
+
+/**
+ MERGE SORT - sorts an array of integer in ascending order
+ Halves the array. Recursively calls mergeSort() on halves and merges the sorted subarrays with merge().
+
+ \param arr an array of integers
+ \param low index of first element to sort
+ \param high index of last element to sort
+
+ \return 0 on completion
+
+ */
 int mergeSort(int arr[], int low, int high){
   if (low >= high){
     return 0;
@@ -249,7 +302,6 @@ int searchForNumber(Element arr[], int target, int size) {
 
 // searches for given string sequence in array of Element of given size already sorted by letters
 // starts searching in the middle of array and goes left or right depending on target element
-// TODO searching for non existent element gives seg fault --> fix
 int searchForLetters(Element arr[], char target[], int size) {
   // first choose middle of array
   int middle;
@@ -284,26 +336,28 @@ int searchForInput(Element arr[], int low, int high) {
       printf("Quitting...\n");
       return 0;
     };
-    fflush(stdin);
+    char temp[256];
+    fgets(temp, 255, stdin);
     switch (input) {
     case 1:;
       int number = 0;
       printf("Type in the number you want to search for:\n");
       scanf("%d", &number);
-      fflush(stdin);
+      fgets(temp, 255, stdin);
       while(!number){
       printf("Input Invalid. Type in the number you want to search for:\n");
       scanf("%d", &number);
-      fflush(stdin);
       }
+      fgets(temp, 255, stdin);
       quickSortWithElements(arr, low, high-1, true);
       searchForNumber(arr, number, high);
       break;
     case 2:
       printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
       char letters[4];
-      fgets(letters, 4, stdin );
-      fflush(stdin);
+      fgets(temp, 255, stdin);
+      strncpy(letters, temp, 3);
+      letters[3] = '\0';
       quickSortWithElements(arr, low, high-1, false);
       searchForLetters(arr, letters, high);
       break;
@@ -324,17 +378,18 @@ int searchForInputStdLib(Element arr[], int low, int high) {
       printf("Quitting...\n");
       return 0;
     };
-    fflush(stdin);
+    char temp[256];
+    fgets(temp, 255, stdin);
     switch (input) {
     case 1:;
       int number = 0;
       printf("Type in the number you want to search for:\n");
       scanf("%d", &number);
-      fflush(stdin);
+      fgets(temp, 255, stdin);
       while(!number){
       printf("Input Invalid. Type in the number you want to search for:\n");
       scanf("%d", &number);
-      fflush(stdin);
+      fgets(temp, 255, stdin);
       }
       qsort(arr, arraySize, sizeof(Element), compareElementsByNumber);
       int *int_item;
@@ -349,8 +404,10 @@ int searchForInputStdLib(Element arr[], int low, int high) {
     case 2:
       printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
       char letters[4];
-      fgets(letters, 4, stdin );
-      fflush(stdin);
+      fgets(temp, 255, stdin);
+      strncpy(letters, temp, 3);
+      letters[3] = '\0';
+
       qsort(arr, arraySize, sizeof(Element), compareElementsByLetters);
       char * char_item;
       char_item = (char*) bsearch(&letters , arr, arraySize, sizeof(Element), compareStringToElement);
