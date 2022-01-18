@@ -26,7 +26,7 @@ int main(){
   compareArrayAndListInsertionSort();
   printf("2.1 Sort and list - self-implemented.\n");
   sortAndSearchElements();
-   printf("2.2 Sort and list - Library Function.\n");
+  printf("2.2 Sort and list - Library Function.\n");
   sortAndSearchElementsStdLib();
 
   return 0;
@@ -56,9 +56,10 @@ int sortAndSearchElements() {
   searchForInput(arr, 0, size);
   //can be used to output sorted array:
   //printArrayOfElements(arr, size);
-  for (int i = 0; i < size; i++){
-    free((arr+i)->letters);
-  }
+  // TODO something wrong with freeing of letter here
+  // for (int i = 0; i < size; i++){
+  //   free((arr+i)->letters);
+  // }
   free(arr);
   return 0;
 }

@@ -347,8 +347,9 @@ int searchForInput(Element arr[], int low, int high) {
       while(!number){
       printf("Input Invalid. Type in the number you want to search for:\n");
       scanf("%d", &number);
-      }
       fgets(temp, 255, stdin);
+      }
+
       quickSortWithElements(arr, low, high-1, true);
       searchForNumber(arr, number, high);
       break;
