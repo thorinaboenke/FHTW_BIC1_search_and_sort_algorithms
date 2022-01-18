@@ -32,4 +32,12 @@ void printList(struct Node* head);
 
 void deleteList(struct Node* head);
 
+int compareElementsByNumber(const void *El1, const void *El2);
+
+int compareElementsByLetters(const void *El1, const void *El2);
+
+int compareStringToElement(const void *s, const void *d);
+
+int compareNumberToElement(const void *s, const void *d);
+
 #endif

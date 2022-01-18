@@ -315,6 +315,59 @@ int searchForInput(Element arr[], int low, int high) {
   return 0;
 }
 
+int searchForInputStdLib(Element arr[], int low, int high) {
+  int arraySize = 400;
+  int input = 1;
+  while (input != 0) {
+    printf("Using standard library functions. Do you want to search for numbers (type '1') or letters (type '2'):\nOr press any other key to quit.\n");
+    if (scanf("%d", &input) == 0){
+      printf("Quitting...\n");
+      return 0;
+    };
+    fflush(stdin);
+    switch (input) {
+    case 1:;
+      int number = 0;
+      printf("Type in the number you want to search for:\n");
+      scanf("%d", &number);
+      fflush(stdin);
+      while(!number){
+      printf("Input Invalid. Type in the number you want to search for:\n");
+      scanf("%d", &number);
+      fflush(stdin);
+      }
+      qsort(arr, arraySize, sizeof(Element), compareElementsByNumber);
+      int *int_item;
+      int_item = (int*) bsearch(&number , arr, arraySize, sizeof(Element), compareNumberToElement);
+      // void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *))
+      if( int_item != NULL ) {
+      printf("Found item = %d\n", *int_item);
+        } else {
+      printf("Item = %d could not be found\n", number);
+        }
+      break;
+    case 2:
+      printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
+      char letters[4];
+      fgets(letters, 4, stdin );
+      fflush(stdin);
+      qsort(arr, arraySize, sizeof(Element), compareElementsByLetters);
+      char * char_item;
+      char_item = (char*) bsearch(&letters , arr, arraySize, sizeof(Element), compareStringToElement);
+      if (char_item != NULL){
+      printf("Found item = %s\n", letters);
+      } else {
+        printf("Item = %s could not be found\n", letters);
+      }
+      break;
+    default:
+      printf("Quitting...\n");
+      return 0;
+    }
+  }
+  return 0;
+}
+
 // INSERTION SORT WITH LIST
 
 struct Node* insertNode(struct Node* sorted, struct Node* new_node){
@@ -349,16 +402,12 @@ struct Node* listInsertionSort(struct Node* head){
 
 int executeSort(char name[], int arr[], int length) {
   if (strcmp(name,bub) == 0) {
-      printf("bub\n");
       bubbleSort(arr, length);
     } else if (strcmp(name, ins) == 0) {
-      printf("ins\n");
       insertionSort(arr, length);
     } else if (strcmp(name, mer) == 0) {
-      printf("mer\n");
       mergeSort(arr, 0, (length-1));
     } else if (strcmp(name, qui) == 0) {
-      printf("qui\n");
       quickSort(arr, 0, (length-1));
     } else {
       fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");

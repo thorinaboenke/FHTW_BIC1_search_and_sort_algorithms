@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <math.h>
 
@@ -11,7 +12,7 @@ struct Node {
 
 typedef struct Element {
   int number;
-  char letters[3];
+  char letters[4];
 } Element;
 
 Element * initializeArrayOfElements(int size) {
@@ -33,6 +34,8 @@ Element * initializeArrayOfElements(int size) {
     for (int j = 0; j < sizeof(new_array->letters); j++) {
       (new_array+i)->letters[j] = 65 + (rand() % 26);
     }
+    (new_array+i)->letters[3] = '\0';
+
   }
   return new_array;
 }
@@ -146,4 +149,30 @@ void deleteList(struct Node* head){
   head = head->next;
   free(temp);
   }
+}
+// compare functions for qsort
+int compareElementsByNumber(const void *El1, const void *El2){
+  Element *C1 = (Element *)El1;
+  Element *C2 = (Element *)El2;
+  return (C1->number - C2->number);
+}
+
+int compareElementsByLetters(const void *El1, const void *El2){
+  Element *E1 = (Element *)El1;
+  Element *E2 = (Element *)El2;
+  return strcmp(E1->letters, E2->letters);
+}
+
+
+// compare functions for bsearch
+int compareStringToElement(const void *s, const void *d) {
+    return strncmp(s, ((const Element *)d)->letters, sizeof(((Element *)0)->letters));
+}
+
+int compareNumberToElement(const void *s, const void *d) {
+  int *C1 = (int *)s;
+  Element *C2 = (Element *)d;
+  return (*C1 - C2->number);
+  // alternatively
+  //return (*(int*)s - C2->number);
 }
