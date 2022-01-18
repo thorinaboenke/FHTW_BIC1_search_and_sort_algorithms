@@ -13,6 +13,7 @@ int merge(int arr[], int low, int middle, int high);
 int mergeSort(int arr[], int low, int high);
 int partition(int arr[], int low, int high);
 int quickSort(int arr[], int low, int high);
+int searchForInput(Element arr[], int low, int high);
 int executeSort(char name[], int arr[], int length);
 clock_t measureSort(char name[], int array_of_inputs[], int length);
 
