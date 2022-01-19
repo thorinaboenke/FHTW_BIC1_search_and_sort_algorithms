@@ -172,7 +172,19 @@ int mergeSort(int arr[], int low, int high){
 return 0;
 }
 
-// QUICK SORT OF INT ARRAY
+/**
+ QUICK SORT - partition
+
+ selects a pivot element from the array, here last Element becomes pivot
+ assigns temporary pivot index - marks the index in the array, where everything with a smaller index (to the left)
+ is already smaller than the pivot itself, but not sorted itself.
+
+ \param arr an array of integers
+ \param low index of first element
+ \param high index of last element
+
+  \return correct position of pivot
+ */
 
 // dividing array into two partitions
 int partition(int arr[], int low, int high){
@@ -197,8 +209,18 @@ int partition(int arr[], int low, int high){
 }
 
 
-// selecting a pivot element from the array and partitioning the other elements into two sub-arrays
-// sort sub arrays recursively
+/**
+ QUICK SORT - sorts an array of integer in ascending order
+
+ selects a pivot element from the array and partitioning the other elements into two sub-arrays with partition()
+ sorts sub arrays recursively
+
+ \param arr an array of integers
+ \param low index of first element
+ \param high index of last element
+
+  \return 0 on completion
+ */
 int quickSort(int arr[], int low, int high){
   if (low < high) {
   // partition array and get pivot index
@@ -254,7 +276,7 @@ int partitionWithElementsByLetters(Element arr[], int low, int high) {
 }
 
 // executes quick sort on array of Element
-// either sorting it by numbers or letters depending on kind (either 'l' or 'n')
+// either sorting it by numbers or letters depending on parameter sortByNumber
 int quickSortWithElements(Element arr[], int low, int high, bool sortByNumber){
   if (low < high) {
     int pivot;
@@ -327,7 +349,8 @@ int searchForLetters(Element arr[], char target[], int size) {
   return 0;
 }
 
-// continiously searches for input from stdin for either a given number or given string sequence in array of Element
+// allows repeated searches for input from stdin for either a given number or given string sequence in array of Element
+// uses self implemented quick sort and binary search
 int searchForInput(Element arr[], int low, int high) {
   int input = 1;
   while (input != 0) {
@@ -370,6 +393,8 @@ int searchForInput(Element arr[], int low, int high) {
   return 0;
 }
 
+// allows repeated searches for input from stdin for either a given number or given string sequence in array of Element
+// uses self standard library qsort() and bsearch()
 int searchForInputStdLib(Element arr[], int low, int high) {
   int arraySize = 400;
   int input = 1;
@@ -428,6 +453,7 @@ int searchForInputStdLib(Element arr[], int low, int high) {
 
 // INSERTION SORT WITH LIST
 
+// inserts a new Node in the correct position in a sorted list of Nodes, used by listInsertionSort()
 struct Node* insertNode(struct Node* sorted, struct Node* new_node){
   if (sorted == NULL || sorted->data > new_node->data){
     new_node->next = sorted;
@@ -445,6 +471,9 @@ struct Node* insertNode(struct Node* sorted, struct Node* new_node){
   return sorted;
 }
 
+// sorts a singly linked list of Nodes in ascending order
+// takes nodes from beginning of list and puts them in the correct place in a new sorted list with insertNode()
+// returns pointer to the head of the sorted list
 struct Node* listInsertionSort(struct Node* head){
   struct Node* sorted = NULL;
   struct Node* current = head;
@@ -457,7 +486,7 @@ struct Node* listInsertionSort(struct Node* head){
 }
 
 // HELPER FUNCTIONS
-
+// executes different sorts based on parameter name
 int executeSort(char name[], int arr[], int length) {
   if (strcmp(name,bub) == 0) {
       bubbleSort(arr, length);
@@ -474,6 +503,9 @@ int executeSort(char name[], int arr[], int length) {
     return 0;
 }
 
+// measures time a sorting algorithm takes. Get ticks before and after completion of the algorithm, subtracts start ticks from end ticks
+// returns time in clock ticks (microseconds)
+// which algorithm is run is determined by the parameter name
 clock_t measureSort(char name[], int array_of_inputs[], int length) {
   clock_t start_t, end_t, total_t;
   start_t = clock();

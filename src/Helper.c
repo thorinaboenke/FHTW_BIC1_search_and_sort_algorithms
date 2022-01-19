@@ -18,8 +18,6 @@ typedef struct Element {
 Element * initializeArrayOfElements(int size) {
   time_t t;
   srand((unsigned) time(&t));
-
-
   Element *new_array = (Element *)malloc(sizeof(Element)*size);
   if (new_array == NULL){
     printf("Memory allocation failed");
@@ -40,6 +38,7 @@ Element * initializeArrayOfElements(int size) {
   return new_array;
 }
 
+// iterates over an Array of structs Element and prints them out
 void printArrayOfElements(Element arr[], int length) {
   for (int i = 0; i < length; i++){
     printf("Element %d: numbers: %d - letters: %s\n", i, (arr+i)->number, (arr+i)->letters);
@@ -50,7 +49,7 @@ void printArrayOfElements(Element arr[], int length) {
   printf("\n");
 }
 
-// helper function to swap array elements
+// helper function to swap array elements in an array of integers
 void swap(int *a, int *b){
     int temp = *a;
     *a = *b;
@@ -64,7 +63,8 @@ void swapElements(Element *a, Element *b) {
   *b = temp;
 }
 
-//function to initialize array, allocate memory dynamically and return a int pointer to start address
+// function to initialize integer array, allocates memory dynamically and returns a pointer to start address
+// always uses the same pseudo random numbers
 int * initializeArray(int size) {
   // seed random function always with the same value so the same numbers are generated
   srand(1);
@@ -86,7 +86,8 @@ int * initializeArray(int size) {
   return new_array;
 }
 
-// helper function to check if array is sorted in ascending order
+// helper function to check if integer array is sorted in ascending order
+// prints message to the console if array is not sorted correctly
 int checkAscending(int arr[], int length){
   for (int i = 0; i < length-1; i++){
     if ( arr[i] > arr[i+1]){
@@ -97,6 +98,8 @@ int checkAscending(int arr[], int length){
   return 0;
 }
 
+// iterates over an array of integers arr of size length and prints out all elements
+// max 15 per line
 void printArray(int arr[], int length){
   for (int i = 0; i < length; i++){
     printf("%d ", arr[i]);
@@ -107,6 +110,7 @@ void printArray(int arr[], int length){
   printf("\n");
 }
 
+// traverses a linked list and prints all elements from a linked list of Nodes
 void printList(struct Node * head){
   int count = 0;
   if (head == NULL){
@@ -124,6 +128,9 @@ void printList(struct Node * head){
   return;
 }
 
+// dynamically allocates memory for a new node
+// initializes data field with the integer passed as function paramter
+// returns pointer to the new node
 struct Node* getNewNode(int data){
   struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
   newNode->data = data;
@@ -131,6 +138,8 @@ struct Node* getNewNode(int data){
   return newNode;
 }
 
+// initializes linked list of nodes of a given size length
+// returns pointer to the head node
 struct Node* initializeList(int length, int arr[]){
   struct Node* head = getNewNode(arr[0]);
   struct Node* current = head;
@@ -142,6 +151,7 @@ struct Node* initializeList(int length, int arr[]){
   return head;
 }
 
+// deletes all element in a linkes list of Nodes
 void deleteList(struct Node* head){
   struct Node *temp;
   while(head != NULL){
@@ -150,13 +160,14 @@ void deleteList(struct Node* head){
   free(temp);
   }
 }
-// compare functions for qsort
+// compare functions numbers for stdlib qsort()
 int compareElementsByNumber(const void *El1, const void *El2){
   Element *C1 = (Element *)El1;
   Element *C2 = (Element *)El2;
   return (C1->number - C2->number);
 }
 
+// compare functions strings for stdlib qsort()
 int compareElementsByLetters(const void *El1, const void *El2){
   Element *E1 = (Element *)El1;
   Element *E2 = (Element *)El2;
@@ -164,11 +175,12 @@ int compareElementsByLetters(const void *El1, const void *El2){
 }
 
 
-// compare functions for bsearch
+// compare functions for strings for stdlib bsearch()
 int compareStringToElement(const void *s, const void *d) {
     return strncmp(s, ((const Element *)d)->letters, sizeof(((Element *)0)->letters));
 }
 
+// compare functions for numbers for stdlib bsearch()
 int compareNumberToElement(const void *s, const void *d) {
   int *C1 = (int *)s;
   Element *C2 = (Element *)d;
