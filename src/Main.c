@@ -149,7 +149,8 @@ void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int len
   // TODO: make useable unit for ticks
   clock_t total_t, total_t_ascending, total_t_descending;
   printf("----------%s------------\n", name);
-  printf("elements\tduration:\trandom\tascending\tdescending\n" );
+  // we measure performance in clock ticks. There are 1 million clock ticks per second on POSIX systems, that makes a microsecond per clock tick.
+  printf("elements\tduration in us:\trandom\tascending\tdescending\n" );
   for (int i = 0; i<length; i++){
     // random input
     total_t = measureSort(name, array_of_inputs[i], sizes[i]);
@@ -196,9 +197,9 @@ void averageTime(){
   }
   avg = sum/20;
 
-  printf("Minimun runtime; %.0f\n", min );
-  printf("Maximum runtime; %.0f\n", max );
-  printf("Average runtime; %.0f\n", avg);
+  printf("Minimun runtime; %.0f microseconds\n", min );
+  printf("Maximum runtime; %.0f microseconds\n", max );
+  printf("Average runtime; %.0f microseconds\n", avg);
   printf("\n");
 }
 
@@ -240,8 +241,8 @@ printf("Printing sorted list:\n");
 printList(head);
 printf("\n");
 printf("\tInit \tSort\n");
-printf("Array: \t%.0lu\t%.0lu\n", total_array_init, total_array_sort);
-printf("List: \t%.0lu\t%.0lu\n", total_list_init, total_list_sort);
+printf("Array: \t%.0lu\t%.0lu microseconds\n", total_array_init, total_array_sort);
+printf("List: \t%.0lu\t%.0lu microseconds\n", total_list_init, total_list_sort);
 
 deleteList(head);
 free(array);
