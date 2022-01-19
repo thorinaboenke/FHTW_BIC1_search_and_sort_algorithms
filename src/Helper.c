@@ -29,7 +29,7 @@ Element * initializeArrayOfElements(int size) {
     (new_array+i)->number = (int)(rand() % 32767);
 
     // create a random character (ASCII between 65 and 90) for the size of struct Element member 'letters'
-    for (int j = 0; j < sizeof(new_array->letters); j++) {
+    for (int j = 0; j < (int)sizeof(new_array->letters); j++) {
       (new_array+i)->letters[j] = 65 + (rand() % 26);
     }
     (new_array+i)->letters[3] = '\0';
@@ -160,14 +160,14 @@ void deleteList(struct Node* head){
   free(temp);
   }
 }
-// compare functions numbers for stdlib qsort()
+// compare functions for numbers for stdlib qsort()
 int compareElementsByNumber(const void *El1, const void *El2){
   Element *C1 = (Element *)El1;
   Element *C2 = (Element *)El2;
   return (C1->number - C2->number);
 }
 
-// compare functions strings for stdlib qsort()
+// compare functions for strings for stdlib qsort()
 int compareElementsByLetters(const void *El1, const void *El2){
   Element *E1 = (Element *)El1;
   Element *E2 = (Element *)El2;
