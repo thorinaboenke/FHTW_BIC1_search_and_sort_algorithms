@@ -15,6 +15,7 @@ float * initializeArray(int size) {
   float random_number = (float)(rand() % 32767)/1000;
   // only 3 decimals
 
+  // make every 2nd number negative
   if (rand() % 2 == 1) {
     random_number *= -1;
   }
