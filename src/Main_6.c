@@ -16,7 +16,7 @@ int main(){
 }
 
 int sortAndSearchElementsStdLib(){
- int size = 400;
+  int size = 400;
   Element *arr = initializeArrayOfElements(size);
   printArrayOfElements(arr, size);
   searchForInputStdLib(arr, 0, size);

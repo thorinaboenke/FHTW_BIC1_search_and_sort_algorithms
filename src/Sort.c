@@ -82,7 +82,7 @@ int insertionSort(int arr[], int length){
     }
     arr[j] = value_to_sort;
   }
-return 0;
+  return 0;
 }
 
 
@@ -169,7 +169,7 @@ int mergeSort(int arr[], int low, int high){
   mergeSort(arr, low, middle);
   mergeSort(arr, middle+1, high);
   merge(arr, low, middle, high);
-return 0;
+  return 0;
 }
 
 /**
@@ -223,11 +223,11 @@ int partition(int arr[], int low, int high){
  */
 int quickSort(int arr[], int low, int high){
   if (low < high) {
-  // partition array and get pivot index
-  int pivot = partition(arr, low, high);
-  // Sort the two partitions
-  quickSort(arr, low, pivot - 1); // sort left side of pivot
-  quickSort(arr, pivot + 1, high); // sort right side of pivot
+    // partition array and get pivot index
+    int pivot = partition(arr, low, high);
+    // Sort the two partitions
+    quickSort(arr, low, pivot - 1); // sort left side of pivot
+    quickSort(arr, pivot + 1, high); // sort right side of pivot
   }
   return 0;
 }
@@ -368,9 +368,9 @@ int searchForInput(Element arr[], int low, int high) {
       scanf("%d", &number);
       fgets(temp, 255, stdin);
       while(!number){
-      printf("Input Invalid. Type in the number you want to search for:\n");
-      scanf("%d", &number);
-      fgets(temp, 255, stdin);
+        printf("Input Invalid. Type in the number you want to search for:\n");
+        scanf("%d", &number);
+        fgets(temp, 255, stdin);
       }
 
       quickSortWithElements(arr, low, high-1, true);
@@ -413,19 +413,19 @@ int searchForInputStdLib(Element arr[], int low, int high) {
       scanf("%d", &number);
       fgets(temp, 255, stdin);
       while(!number){
-      printf("Input Invalid. Type in the number you want to search for:\n");
-      scanf("%d", &number);
-      fgets(temp, 255, stdin);
+        printf("Input Invalid. Type in the number you want to search for:\n");
+        scanf("%d", &number);
+        fgets(temp, 255, stdin);
       }
       qsort(arr, arraySize, sizeof(Element), compareElementsByNumber);
       int *int_item;
       int_item = (int*) bsearch(&number , arr, arraySize, sizeof(Element), compareNumberToElement);
       // void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *))
       if( int_item != NULL ) {
-      printf("Found item = %d\n", *int_item);
-        } else {
-      printf("Item = %d could not be found\n", number);
-        }
+        printf("Found item = %d\n", *int_item);
+      } else {
+        printf("Item = %d could not be found\n", number);
+      }
       break;
     case 2:
       printf("Type in the letters (3 upper-case letters only) you want to search for:\n");
@@ -438,7 +438,7 @@ int searchForInputStdLib(Element arr[], int low, int high) {
       char * char_item;
       char_item = (char*) bsearch(&letters , arr, arraySize, sizeof(Element), compareStringToElement);
       if (char_item != NULL){
-      printf("Found item = %s\n", letters);
+        printf("Found item = %s\n", letters);
       } else {
         printf("Item = %s could not be found\n", letters);
       }
@@ -489,18 +489,18 @@ struct Node* listInsertionSort(struct Node* head){
 // executes different sorts based on parameter name
 int executeSort(char name[], int arr[], int length) {
   if (strcmp(name,bub) == 0) {
-      bubbleSort(arr, length);
-    } else if (strcmp(name, ins) == 0) {
-      insertionSort(arr, length);
-    } else if (strcmp(name, mer) == 0) {
-      mergeSort(arr, 0, (length-1));
-    } else if (strcmp(name, qui) == 0) {
-      quickSort(arr, 0, (length-1));
-    } else {
-      fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");
-      return 1;
-    }
-    return 0;
+    bubbleSort(arr, length);
+  } else if (strcmp(name, ins) == 0) {
+     insertionSort(arr, length);
+  } else if (strcmp(name, mer) == 0) {
+    mergeSort(arr, 0, (length-1));
+  } else if (strcmp(name, qui) == 0) {
+    quickSort(arr, 0, (length-1));
+  } else {
+    fprintf(stderr, "Error. No valid sort function was specified - Use one of: 'Bubblesort', 'Insertionsort', 'Mergesort', 'Quicksort'");
+    return 1;
+  }
+  return 0;
 }
 
 // measures time a sorting algorithm takes. Get ticks before and after completion of the algorithm, subtracts start ticks from end ticks

@@ -33,7 +33,7 @@ int main(){
 }
 
 int sortAndSearchElementsStdLib(){
- int size = 400;
+  int size = 400;
   Element *arr = initializeArrayOfElements(size);
   printArrayOfElements(arr, size);
   searchForInputStdLib(arr, 0, size);
@@ -146,7 +146,6 @@ int comparePerformance(){
 }
 
 void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length) {
-  // TODO: make useable unit for ticks
   clock_t total_t, total_t_ascending, total_t_descending;
   printf("----------%s------------\n", name);
   // we measure performance in clock ticks. There are 1 million clock ticks per second on POSIX systems, that makes a microsecond per clock tick.
@@ -204,46 +203,46 @@ void averageTime(){
 }
 
 void compareArrayAndListInsertionSort(){
-clock_t start, end, total_array_init, total_array_sort, total_list_init, total_list_sort;
-struct Node* head = NULL;
+  clock_t start, end, total_array_init, total_array_sort, total_list_init, total_list_sort;
+  struct Node* head = NULL;
 
-start = clock();
-int * array = initializeArray(2048);
-end = clock();
-total_array_init = (double)(end - start);
+  start = clock();
+  int * array = initializeArray(2048);
+  end = clock();
+  total_array_init = (double)(end - start);
 
-start = clock();
-head = initializeList(2048, array);
-end = clock();
-total_list_init = (double)(end - start);
+  start = clock();
+  head = initializeList(2048, array);
+  end = clock();
+  total_list_init = (double)(end - start);
 
-printf("Printing array:\n");
-printArray(array, 2048);
-printf("\n");
-printf("Printing list:\n");
-printList(head);
-printf("\n");
+  printf("Printing array:\n");
+  printArray(array, 2048);
+  printf("\n");
+  printf("Printing list:\n");
+  printList(head);
+  printf("\n");
 
-start = clock();
-insertionSort(array, 2048);
-end = clock();
-total_array_sort = (double)(end - start);
+  start = clock();
+  insertionSort(array, 2048);
+  end = clock();
+  total_array_sort = (double)(end - start);
 
-start = clock();
-head = listInsertionSort(head);
-end = clock();
-total_list_sort = (double)(end - start);
+  start = clock();
+  head = listInsertionSort(head);
+  end = clock();
+  total_list_sort = (double)(end - start);
 
-printf("Printing sorted array:\n");
-printArray(array, 2048);
-printf("\n");
-printf("Printing sorted list:\n");
-printList(head);
-printf("\n");
-printf("\tInit \tSort\n");
-printf("Array: \t%.0lu\t%.0lu microseconds\n", total_array_init, total_array_sort);
-printf("List: \t%.0lu\t%.0lu microseconds\n", total_list_init, total_list_sort);
+  printf("Printing sorted array:\n");
+  printArray(array, 2048);
+  printf("\n");
+  printf("Printing sorted list:\n");
+  printList(head);
+  printf("\n");
+  printf("\tInit \tSort\n");
+  printf("Array: \t%.0lu\t%.0lu microseconds\n", total_array_init, total_array_sort);
+  printf("List: \t%.0lu\t%.0lu microseconds\n", total_list_init, total_list_sort);
 
-deleteList(head);
-free(array);
+  deleteList(head);
+  free(array);
 }

@@ -73,7 +73,6 @@ int comparePerformance(){
 }
 
 void outputPerformance(char name[], int* array_of_inputs[], int sizes[], int length) {
-  // TODO: make useable unit for ticks
   clock_t total_t, total_t_ascending, total_t_descending;
   printf("----------%s------------\n", name);
   // we measure performance in clock ticks. There are 1 million clock ticks per second on POSIX systems, that makes a microsecond per clock tick.

@@ -155,9 +155,9 @@ struct Node* initializeList(int length, int arr[]){
 void deleteList(struct Node* head){
   struct Node *temp;
   while(head != NULL){
-  temp = head;
-  head = head->next;
-  free(temp);
+    temp = head;
+    head = head->next;
+    free(temp);
   }
 }
 // compare functions for numbers for stdlib qsort()
@@ -177,7 +177,7 @@ int compareElementsByLetters(const void *El1, const void *El2){
 
 // compare functions for strings for stdlib bsearch()
 int compareStringToElement(const void *s, const void *d) {
-    return strncmp(s, ((const Element *)d)->letters, sizeof(((Element *)0)->letters));
+  return strncmp(s, ((const Element *)d)->letters, sizeof(((Element *)0)->letters));
 }
 
 // compare functions for numbers for stdlib bsearch()
