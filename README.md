@@ -12,3 +12,8 @@ run sorts.sh scipt with 1-6 as parameter according to the subtask.
 - VERKETTE LISTEN 1.4 : 4
 - SORTIEREN UND SUCHEN – SELBST IMPLEMENTIERT 2.2 : 5
 - SORTIEREN UND SUCHEN – STDLIB 2.2 : 6
+
+## participants
+* Alexandra Groschner
+* Gloria Mittmann
+* Thorina Boenke
