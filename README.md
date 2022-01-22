@@ -14,6 +14,6 @@ run sorts.sh scipt with 1-6 as parameter according to the subtask.
 - SORTIEREN UND SUCHEN – STDLIB 2.2 : 6
 
 ## participants
-* Alexandra Groschner
-* Gloria Mittmann
-* Thorina Boenke
+* Alexandra Groschner - ic21b040
+* Gloria Mittmann - ic21b105
+* Thorina Boenke - ic21b060
