@@ -37,14 +37,6 @@ int sortAndSearchElementsStdLib(){
   Element *arr = initializeArrayOfElements(size);
   printArrayOfElements(arr, size);
   searchForInputStdLib(arr, 0, size);
-  // TODO something wrong with freeing of letter here
-  //can be used to output sorted array:
-  //printArrayOfElements(arr, size);
-  // for (int i = 0; i < size; i++){
-  //   printf("free %s successfull\n", (arr+i)->letters);
-  //   free(arr[i].letters);
-  //   printf("free %d successfull\n", i);
-  // }
   free(arr);
   return 0;
 }
@@ -54,12 +46,6 @@ int sortAndSearchElements() {
   Element *arr = initializeArrayOfElements(size);
   printArrayOfElements(arr, size);
   searchForInput(arr, 0, size);
-  //can be used to output sorted array:
-  //printArrayOfElements(arr, size);
-  // TODO something wrong with freeing of letter here
-  // for (int i = 0; i < size; i++){
-  //   free((arr+i)->letters);
-  // }
   free(arr);
   return 0;
 }

@@ -4,7 +4,6 @@
 #include <time.h>
 #include <math.h>
 
-// TODO: do we have to declare these two strucuts in this file and the header file too?
 struct Node {
   int data;
   struct Node* next;
