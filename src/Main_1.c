@@ -20,8 +20,8 @@ int outputSorts(){
   int length = sizeof(sizes)/sizeof(sizes[0]);
   outputSort(bub, sizes, length);
   outputSort(ins, sizes, length);
-  //outputSort(mer, sizes, length);
-  //outputSort(qui, sizes, length);
+  outputSort(mer, sizes, length);
+  outputSort(qui, sizes, length);
   return 0;
 }
 
