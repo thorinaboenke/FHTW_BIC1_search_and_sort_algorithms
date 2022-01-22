@@ -26,11 +26,11 @@ int partition(float arr[], int low, int high){
 // sort sub arrays recursively
 int quickSort(float arr[], int low, int high){
   if (low < high) {
-  // partition array and get pivot index
-  int pivot = partition(arr, low, high);
-  // Sort the two partitions
-  quickSort(arr, low, pivot - 1); // sort left side of pivot
-  quickSort(arr, pivot + 1, high); // sort right side of pivot
+    // partition array and get pivot index
+    int pivot = partition(arr, low, high);
+    // Sort the two partitions
+    quickSort(arr, low, pivot - 1); // sort left side of pivot
+    quickSort(arr, pivot + 1, high); // sort right side of pivot
   }
   return 0;
 }

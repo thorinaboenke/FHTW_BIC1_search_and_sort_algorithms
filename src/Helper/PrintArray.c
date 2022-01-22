@@ -4,7 +4,7 @@
 void printArray (float arr[], int length){
   for (int i = 0; i < length; i++){
     printf("%.3f ", arr[i]);
-    if ( i != 0 && (i+1) % 15 == 0){
+    if (i != 0 && (i+1) % 15 == 0){
       printf("\n");
     }
   }
